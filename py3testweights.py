@@ -55,8 +55,12 @@ def testWeights(name, values):
             return
         data = np.concatenate(data)
         type = np.concatenate(type)
-        score, correctness = testweights.test_weights(data, type, classifier,
+        result = testweights.test_weights(data, type, classifier,
             matrixshape, repetitions)
+        if isinstance(result, str):
+            Error(result)
+            return
+        score, correctness = result
         message = '\n'.join(fnames)
         message += '\n\n%s\n\nExpected accuracy for a %s matrix:\n\n' % \
             (

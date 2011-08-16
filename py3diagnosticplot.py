@@ -55,6 +55,9 @@ def diagnosticPlot(name, values):
         type = np.concatenate(type)
         if weightfile:
             weights = loaddata.load_weights(weightfile)
+            if isinstance(weights, str):
+                Error(weights)
+                return
             classifier = np.zeros(data.shape[1:])
             classifier[:weights.shape[0], :weights.shape[1]] = weights
             classifier_max = max(abs(classifier.max()), abs(classifier.min()))
