@@ -213,6 +213,7 @@ class MultiBrowse(Widget):
         self.filetypes = filetypes
 
     def initialize(self, parent, row):
+        self.splitlist = parent.splitlist
         parent.grid_rowconfigure(row, weight = 1)
         frame = Frame(parent)
         frame.grid(column = 0, row = row, sticky = 'NSEW')
@@ -253,6 +254,8 @@ class MultiBrowse(Widget):
 
     def askopen(self):
         fnames = askopenfilenames(filetypes = self.filetypes)
+        if isinstance(fnames, str) or isinstance(fnames, unicode):
+            fnames = self.splitlist(fnames)
         if isinstance(fnames, tuple) and len(fnames) != 0:
             os.chdir(os.path.dirname(fnames[-1]))
             self.fnames.extend(fnames)

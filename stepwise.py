@@ -246,6 +246,8 @@ def stepwisefit(allx, y, inmodel = [], penter = 0.05, premove = 0.10,
             Hoboken, NJ: Wiley-Interscience, 1998. pp. 307-312.
     """
 
+    old_err_settings = np.seterr(divide = 'ignore')
+
     # Begin Housekeeping
 
     if maxiter < 0:
@@ -349,6 +351,8 @@ def stepwisefit(allx, y, inmodel = [], penter = 0.05, premove = 0.10,
     history.rmse = rmse
     history.df0 = df0
     history.inmat = inmat
+
+    np.seterr(**old_err_settings)
 
     return b, se, pval, inmodel, stats, nextstep, history
 

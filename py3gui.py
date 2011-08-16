@@ -19,7 +19,7 @@ from py3diagnosticplot import diagnosticPlot
 def main(argv = []):
     Iwaf(
         title = 'Py3GUI',
-        size = (550, 500),
+        size = (550, 550),
         contents = [
             MultiBrowse('flist', 'Select Training Data',
                 [('Standard Data Files', '.dat'), ('Pickle Files', '.pk')]),
