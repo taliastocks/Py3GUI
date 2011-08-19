@@ -66,3 +66,4 @@ def test_weights(responses, type, classifier, matrixshape, repetitions):
     target_std = np.sqrt(target_var) / c_mean
     nontarget_std = np.sqrt(nontarget_var) / c_mean
     return (target_std, nontarget_std), correctness
+

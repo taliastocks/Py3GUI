@@ -191,18 +191,3 @@ def load_data(fname, window, ftype = None, window_in_samples = False,
     except SyntaxError:
         return 'Data could not be loaded. Wrong file type selected?'
 
-def main(argv = []):
-    load_data(
-        '/Documents and Settings/bci/Desktop/side-by-side/20100714_JV_002/20100714_JV_S002R01.pk',
-        [0, 600],
-        'pickle'
-    )
-    load_data(
-        '/Documents and Settings/bci/Desktop/side-by-side/20100714_JV_001/20100714_JV_S001R02.dat',
-        [0, 800],
-        'standard'
-    )
-
-if __name__ == '__main__':
-    import sys
-    main(sys.argv[1:])

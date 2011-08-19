@@ -104,9 +104,3 @@ def swlda(responses, type, sampling_rate, response_window, decimation_frequency,
     # make whichchannels 1-based
     return whichchannels + 1, restored_weights
 
-def main(argv = []):
-    pass
-
-if __name__ == '__main__':
-    import sys
-    main(sys.argv[1:])

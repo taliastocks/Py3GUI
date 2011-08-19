@@ -53,7 +53,11 @@ def testWeights(name, values):
         if len(data) == 0 or len(type) == 0:
             Error('You must select some data upon which to test the weights.')
             return
-        data = np.concatenate(data)
+        try:
+            data = np.concatenate(data)
+        except ValueError:
+            Error('Not all data files have the same number of channels.')
+            return
         type = np.concatenate(type)
         result = testweights.test_weights(data, type, classifier,
             matrixshape, repetitions)
@@ -79,3 +83,4 @@ def testWeights(name, values):
         Error('Could not fit all the selected data in memory.\n' + \
             'Try loading fewer data files.')
         return
+

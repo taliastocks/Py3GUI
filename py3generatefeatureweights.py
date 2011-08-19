@@ -5,7 +5,6 @@ import numpy as np
 import parsematlab
 import loaddata
 import swlda
-import pca_based
 from iwafgui import Error, Info, SaveAs
 
 def exportToPRM(channels, weights, epoch_length):
@@ -63,6 +62,7 @@ def generateFeatureWeights(name, values):
     data = []
     type = []
     samplingrate = None
+    channels = None
     try:
         for fname in fnames:
             result = loaddata.load_data(fname, response_window, None,
@@ -74,6 +74,11 @@ def generateFeatureWeights(name, values):
                 samplingrate = result[2]
             if samplingrate != result[2]:
                 Error('Not all data files have the same sampling rate.')
+                return
+            if channels == None:
+                channels = result[0].shape[2]
+            if channels != result[0].shape[2]:
+                Error('Not all data files have the same number of channels.')
                 return
             try:
                 data.append(result[0][:, :, channelset])
@@ -94,17 +99,14 @@ def generateFeatureWeights(name, values):
         randomindices.sort()
         data = data[randomindices]
         type = type[randomindices]
-        if classificationmethod == 'SWLDA':
-            result = swlda.swlda(data, type, samplingrate, response_window,
-                decimation_frequency, max_model_features, penter, premove)
-        elif classificationmethod == 'PCA-based':
-            result = reload(pca_based).pca_based(data, type, samplingrate,
-                response_window, decimation_frequency, max_model_features,
-                penter, premove)
+        result = swlda.swlda(data, type, samplingrate, response_window,
+            decimation_frequency, max_model_features, penter, premove)
         if isinstance(result, str):
             Error(result)
             return
         channels, weights = result
+        channels = channelset[channels - 1] + 1 # Convert from one-based for
+            # indexing, and then to one-based for human readability.
         prm = exportToPRM(channels, weights, response_window[1])
         try:
             fname = SaveAs(filetypes = [('Parameter Files', '.prm')],
@@ -121,3 +123,4 @@ def generateFeatureWeights(name, values):
         Error('Could not fit all the selected data in memory.\n' + \
             'Try loading fewer data files.')
         return
+

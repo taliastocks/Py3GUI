@@ -35,7 +35,6 @@ def main(argv = []):
                         '20'),
                     ('classificationmethod', 'Classification Method: ',
                         ['SWLDA']),
-                        #['SWLDA', 'PCA-based']),
                     ('maxmodelfeatures', 'Max Model Features: ',
                         '60'),
                     ('penter', 'Threshold to Add Features: ', '0.1'),
@@ -61,3 +60,4 @@ def main(argv = []):
 if __name__ == '__main__':
     import sys
     main(sys.argv[1:])
+

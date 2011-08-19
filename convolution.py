@@ -20,10 +20,3 @@ def max_gauss_cdf(mu, sigma, n, x):
     x = x - mu
     return ((1 + erf(x / (np.sqrt(2.) * sigma))) / 2.) ** n
 
-def main(argv):
-    pass
-
-if __name__ == '__main__':
-    import sys
-    main(sys.argv[1:])
-

@@ -79,9 +79,3 @@ def parse(value):
         return np.asarray(newvalue)
     return 'Cannot recognize\n    "%s"\nas a valid value.' % original
 
-def main(argv = []):
-    pass
-
-if __name__ == '__main__':
-    import sys
-    main(sys.argv[1:])

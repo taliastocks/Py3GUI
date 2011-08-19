@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import os
+import sys
 
 from distutils.core import setup
 import py2exe
@@ -14,15 +15,19 @@ __file__ = os.path.abspath(__file__)
 os.chdir(os.path.dirname(__file__))
 
 def purgeDir(dirname):
+    sys.stderr.write('Purging directory %s\n' % dirname)
+    sys.stderr.flush()
     for path, dirs, files in os.walk(dirname, topdown = False):
         for fname in files:
             try:
-                os.remove(os.path.join(path, fname))
+                fullpath = os.path.join(path, fname)
+                os.remove(fullpath)
             except:
                 pass
         for dir in dirs:
             try:
-                os.rmdir(os.path.join(path, dir))
+                fullpath = os.path.join(path, dir)
+                os.rmdir(fullpath)
             except:
                 pass
         try:
@@ -38,6 +43,8 @@ def copy(fname, dir = '', newname = None):
         os.makedirs(targetdir)
     from_path = fname
     to_path = os.path.join(targetdir, newname)
+    sys.stderr.write('Copying file from %s to %s\n' % (from_path, to_path))
+    sys.stderr.flush()
     from_file = open(from_path, 'rb')
     to_file = open(to_path, 'wb')
     data = None
@@ -125,6 +132,6 @@ def main(argv = []):
     purgeDir('build')
 
 if __name__ == '__main__':
-    import sys
     sys.argv.append('py2exe')
     main(sys.argv[1:])
+

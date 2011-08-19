@@ -22,7 +22,6 @@ def diagnosticPlot(name, values):
         Error('\n\n'.join(errors))
         return
     response_window = args['responsewindow']
-    channelset = args['channelset'] - 1
     fnames = values['flist'][1]
     removeanomalies = args['removeanomalies'][1]
     weightfile = values['weightfile'][1]
@@ -41,17 +40,16 @@ def diagnosticPlot(name, values):
             if samplingrate != result[2]:
                 Error('Not all data files have the same sampling rate.')
                 return
-            try:
-                data.append(result[0][:, :, channelset])
-            except IndexError:
-                Error('"Channel Set" is not a subset of the available ' + \
-                    'channels.')
-                return
+            data.append(result[0])
             type.append(result[1])
         if len(data) == 0 or len(type) == 0:
             Error('You must select some data to plot.')
             return
-        data = np.concatenate(data)
+        try:
+            data = np.concatenate(data)
+        except ValueError:
+            Error('Not all data files have the same number of channels.')
+            return
         type = np.concatenate(type)
         if weightfile:
             weights = loaddata.load_weights(weightfile)
@@ -177,3 +175,4 @@ def diagnosticPlot(name, values):
         Error('Could not fit all the selected data in memory.\n' + \
             'Try loading fewer data files.')
         return
+

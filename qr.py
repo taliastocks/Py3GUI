@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 import numpy
 from scipy.linalg.decomp import asarray_chkfinite, _datanotshared, \

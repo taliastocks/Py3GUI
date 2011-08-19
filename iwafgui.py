@@ -310,35 +310,3 @@ class Iwaf(Tk):
     def destroy(self):
         self.quit()
 
-def main(argv = []):
-    def display(name, parameters):
-        print name
-        print parameters
-    app = Iwaf(
-        contents = [
-            FileList('flist', 'Select Training Data'),
-            Arguments(
-                'args',
-                [
-                    ('responsewindow', 'Response Window [begin end] (ms): ',
-                        '0 800'),
-                    ('randompercent', '% Random Sample for Training: ',
-                        '100'),
-                    ('decimationfrequency', 'Decimation Frequency (Hz): ',
-                        '20'),
-                    ('maxmodelfeatures', 'Max Model Features: ',
-                        '60'),
-                    ('channelset', 'Channel Set: ', '1:8'),
-                    ('penter', 'Threshold to Add Features: ', '0.1'),
-                    ('premove', 'Threshold to Remove Features: ', '0.15')
-                ]
-            ),
-            Action('print', 'Print', display),
-            Quit()
-        ]
-    )
-    app.mainloop()
-
-if __name__ == '__main__':
-    import sys
-    main(sys.argv[1:])
