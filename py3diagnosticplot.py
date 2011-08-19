@@ -12,7 +12,7 @@ from iwafgui import Error, Info, SaveAs
 def diagnosticPlot(name, values):
     args = values['generation-args'][1]
     errors = []
-    for key in ['responsewindow', 'channelset']:
+    for key in ['responsewindow']:
         label, value = args[key]
         value = parsematlab.parse(value)
         if isinstance(value, str):
@@ -80,11 +80,6 @@ def diagnosticPlot(name, values):
         fig = pylab.figure()
         fig.subplots_adjust(bottom = 0.06, top = 0.93, hspace = 0.45)
         master_ax = ax = pylab.subplot(num_plots, 1, 1)
-        ax.callbacks.connect(
-            'ylim_changed',
-            lambda ax: ax.set_ylim(-0.5, data.shape[2] - 0.5) if \
-                ax.get_ylim() != (-0.5, data.shape[2] - 0.5) else None
-        )
         pylab.title('Target', fontsize = 'medium')
         pylab.imshow(target.transpose(), interpolation = 'nearest',
             cmap = 'PRGn', aspect = 'auto', vmin = vmin, vmax = vmax,
@@ -101,12 +96,8 @@ def diagnosticPlot(name, values):
             fontsize = 'small')
         pylab.axes(pylab.colorbar().ax)
         pylab.yticks(fontsize = 'small')
-        ax = pylab.subplot(num_plots, 1, 2, sharex = master_ax)
-        ax.callbacks.connect(
-            'ylim_changed',
-            lambda ax: ax.set_ylim(-0.5, data.shape[2] - 0.5) if \
-                ax.get_ylim() != (-0.5, data.shape[2] - 0.5) else None
-        )
+        ax = pylab.subplot(num_plots, 1, 2, sharex = master_ax,
+            sharey = master_ax)
         pylab.title('Non-Target', fontsize = 'medium')
         pylab.imshow(nontarget.transpose(), interpolation = 'nearest',
             cmap = 'PRGn', aspect = 'auto', vmin = vmin, vmax = vmax,
@@ -123,12 +114,8 @@ def diagnosticPlot(name, values):
             fontsize = 'small')
         pylab.axes(pylab.colorbar().ax)
         pylab.yticks(fontsize = 'small')
-        ax = pylab.subplot(num_plots, 1, 3, sharex = master_ax)
-        ax.callbacks.connect(
-            'ylim_changed',
-            lambda ax: ax.set_ylim(-0.5, data.shape[2] - 0.5) if \
-                ax.get_ylim() != (-0.5, data.shape[2] - 0.5) else None
-        )
+        ax = pylab.subplot(num_plots, 1, 3, sharex = master_ax,
+            sharey = master_ax)
         pylab.title('Correlation Coefficient', fontsize = 'medium')
         pylab.imshow(signed_r.transpose(), interpolation = 'nearest',
             cmap = 'PRGn', aspect = 'auto', vmin = -signed_r_max,
@@ -149,12 +136,8 @@ def diagnosticPlot(name, values):
         if classifier == None:
             return
 
-        ax = pylab.subplot(num_plots, 1, 4, sharex = master_ax)
-        ax.callbacks.connect(
-            'ylim_changed',
-            lambda ax: ax.set_ylim(-0.5, data.shape[2] - 0.5) if \
-                ax.get_ylim() != (-0.5, data.shape[2] - 0.5) else None
-        )
+        ax = pylab.subplot(num_plots, 1, 4, sharex = master_ax,
+            sharey = master_ax)
         pylab.title('Classifier Weights', fontsize = 'medium')
         pylab.imshow(classifier.transpose(), interpolation = 'nearest',
             cmap = 'PRGn', aspect = 'auto', vmin = -classifier_max,
