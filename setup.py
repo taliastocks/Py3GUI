@@ -78,7 +78,8 @@ def main(argv = []):
                 ],
                 'optimize': 1,
                 'compressed': 2,
-                'ascii': True,
+                #'ascii': True, # May be causing FixTk.pyo error
+                    # LookupError: unknown encoding: mbcs
             }
         },
         data_files = matplotlib.get_py2exe_datafiles(),
